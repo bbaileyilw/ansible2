@@ -1,0 +1,21 @@
+---
+- hosts: myserver
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: ensure Java is installed
+      apt:
+        name: default-jre
+        state: present
+        update_cache: yes
+    - name: create application directory
+      file:
+        path: /var/application
+        state: directory
+    - name: copy application
+      copy:
+        src: app.jar
+        dest: /var/application/app.jar
+    - name: run application
+      shell: nohup java -jar /var/application/app.jar </dev/null >/dev/null 2>&1 &
+    
