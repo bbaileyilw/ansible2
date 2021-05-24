@@ -16,6 +16,20 @@
       copy:
         src: app.jar
         dest: /var/application/app.jar
-    - name: run application
-      shell: nohup java -jar /var/application/app.jar </dev/null >/dev/null 2>&1 &
+    - name: copy starting script
+      copy:
+        src: hello.sh
+        dest: /var/application/hello.sh
+        mode: a+x
+    - name: configure hello as a service
+      file:
+        path: /etc/init.d/hello
+        state: link
+        force: yes
+        src: /var/application/hello.sh
+    - name: run application service
+      service:
+        name: hello
+        enabled: true
+        state: started
     
