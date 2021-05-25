@@ -23,7 +23,7 @@
         mode: a+x
     - name: configure hello as a service
       file:
-        path: /etc/init.d/hello
+        path: /etc/init.d/C
         state: link
         force: yes
         src: /var/application/hello.sh
@@ -31,5 +31,5 @@
       service:
         name: hello
         enabled: true
-        state: started
+        state: restarted
     
